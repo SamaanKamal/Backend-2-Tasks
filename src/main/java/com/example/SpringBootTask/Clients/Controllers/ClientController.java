@@ -17,32 +17,42 @@ public class ClientController {
     @Autowired
     private IClientService clientService;
 
-    // Fetch Products
+
     @GetMapping
     public ResponseEntity<ClientResponse> fetchClients() {
         List<Client> clients = clientService.getAllClients();
+        if(clients==null)
+        {
+            return ResponseEntity.notFound().build();
+        }
         ClientResponse response = new ClientResponse(clients);
         return ResponseEntity.ok(response);
     }
 
-    // Create Product
+
     @PostMapping("/createClient")
-    public ResponseEntity<Void> createClient(@RequestBody ClientRequest clientRequest) {
+    public ResponseEntity<String> createClient(@RequestBody ClientRequest clientRequest) {
+        if(clientRequest==null){
+            return ResponseEntity.badRequest().body("Bad Request data");
+        }
         clientService.createClient(clientRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Client Data Created Successfully");
     }
-
-    // Update Product
     @PutMapping("/{clientId}")
-    public ResponseEntity<Void> updateClient(@PathVariable Long clientId, @RequestBody ClientRequest clientRequest) {
+    public ResponseEntity<String> updateClient(@PathVariable Long clientId, @RequestBody ClientRequest clientRequest) {
+        if(clientRequest==null|| clientId ==null){
+            return ResponseEntity.badRequest().body("Bad Request data");
+        }
         clientService.updateClient(clientId, clientRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Client data Updated successfully");
     }
 
-    // Delete Product
     @DeleteMapping("/{clientId}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long clientId) {
+    public ResponseEntity<String> deleteClient(@PathVariable Long clientId) {
+        if(clientId==null){
+            return ResponseEntity.badRequest().body("Bad Request data");
+        }
         clientService.deleteClient(clientId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Client Data Deleted Successfully");
     }
 }
