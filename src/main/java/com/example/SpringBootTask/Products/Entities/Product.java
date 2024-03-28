@@ -17,7 +17,7 @@ public class Product {
     @Column(name="category")
     private String category;
     @Column(name = "creation_date")
-    private LocalDateTime creationDate = LocalDateTime.now();
+    private final LocalDateTime creationDate = LocalDateTime.now();
     @Column(name = "available_quantity")
     private int availableQuantity;
     @Column(name = "price")
@@ -26,11 +26,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String description, String category, LocalDateTime creationDate, int availableQuantity, double price) {
+    public Product(String name, String description, String category, int availableQuantity, double price) {
         this.name = name;
         this.description = description;
         this.category = category;
-        this.creationDate = creationDate;
         this.availableQuantity = availableQuantity;
         this.price = price;
     }
@@ -67,13 +66,6 @@ public class Product {
         this.category = category;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
 
     public int getAvailableQuantity() {
         return availableQuantity;
