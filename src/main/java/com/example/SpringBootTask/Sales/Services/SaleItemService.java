@@ -1,12 +1,9 @@
 package com.example.SpringBootTask.Sales.Services;
 
-import com.example.SpringBootTask.Clients.Entity.Client;
 import com.example.SpringBootTask.Products.Entities.Product;
 import com.example.SpringBootTask.Sales.Entities.Sale;
 import com.example.SpringBootTask.Sales.Entities.SaleItem;
-import com.example.SpringBootTask.Sales.Entities.Seller;
 import com.example.SpringBootTask.Sales.Handlers.SaleItemRequest;
-import com.example.SpringBootTask.Sales.Handlers.SaleRequest;
 import com.example.SpringBootTask.Sales.Repository.SaleItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +48,7 @@ public class SaleItemService implements ISaleItemService{
     }
 
     @Override
-    public void deleteSale(Long saleItemId) {
+    public void deleteSaleItem(Long saleItemId) {
         saleItemRepository.deleteById(saleItemId);
     }
 }

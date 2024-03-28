@@ -38,12 +38,15 @@ public class SaleService  implements ISaleService{
         sale.setSeller(seller);
         sale.setClient(client);
 
+
         double total = 0;
-        for (SaleItem item : saleItems) {
-            total += item.getQuantity() * item.getPrice();
-            item.setSale(sale);
+        if (saleItems != null) {
+            for (SaleItem item : saleItems) {
+                total += item.getQuantity() * item.getPrice();
+                item.setSale(sale);
+            }
+            sale.setTotal(total);
         }
-        sale.setTotal(total);
 
         // Save sale and associated items
         Sale savedSale = saleRepository.save(sale);

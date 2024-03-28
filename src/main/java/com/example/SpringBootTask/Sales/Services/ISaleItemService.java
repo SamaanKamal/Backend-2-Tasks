@@ -11,6 +11,6 @@ public interface ISaleItemService {
     List<SaleItem> getAllSaleItems();
     void createSaleItems(SaleItemRequest saleItemRequest);
     void updateSaleItem(Long saleItemId, SaleItemRequest saleItemRequest);
-    void deleteSale(Long saleItemId);
+    void deleteSaleItem(Long saleItemId);
 
 }
