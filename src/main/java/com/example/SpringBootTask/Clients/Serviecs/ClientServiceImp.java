@@ -31,7 +31,7 @@ public class ClientServiceImp implements IClientService {
     @Override
     public void updateClient(Long clientId, ClientRequest clientRequest) {
         Client client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + clientId));
+                .orElseThrow(() -> new RuntimeException("Client not found with id: " + clientId));
         client.setName(clientRequest.getName());
         client.setLastName(clientRequest.getLastName());
         client.setMobile(clientRequest.getMobile());
@@ -43,7 +43,7 @@ public class ClientServiceImp implements IClientService {
     @Override
     public void deleteClient(Long clientId) {
         Client client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + clientId));
+                .orElseThrow(() -> new RuntimeException("Client not found with id: " + clientId));
         clientRepository.delete(client);
     }
 }
