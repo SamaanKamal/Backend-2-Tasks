@@ -17,32 +17,40 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    // Fetch Products
     @GetMapping
     public ResponseEntity<ProductResponse> fetchProducts() {
         List<Product> products = productService.getAllProducts();
+        if(products==null){
+            return ResponseEntity.notFound().build();
+        }
         ProductResponse response = new ProductResponse(products);
         return ResponseEntity.ok(response);
     }
 
-    // Create Product
     @PostMapping("/createProduct")
-    public ResponseEntity<Void> createProduct(@RequestBody ProductRequest productRequest) {
+    public ResponseEntity<String> createProduct(@RequestBody ProductRequest productRequest) {
+        if(productRequest==null){
+            return ResponseEntity.badRequest().body("Bad Request data");
+        }
         productService.createProduct(productRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Product Created Successfully");
     }
 
-    // Update Product
     @PutMapping("/{productId}")
-    public ResponseEntity<Void> updateProduct(@PathVariable Long productId, @RequestBody ProductRequest productRequest) {
+    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody ProductRequest productRequest) {
+        if(productId==null|| productRequest ==null){
+            return ResponseEntity.badRequest().body("Bad Request data");
+        }
         productService.updateProduct(productId, productRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Product Updated Successfully");
     }
 
-    // Delete Product
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
+        if(productId==null){
+            return ResponseEntity.badRequest().body("Bad Request data");
+        }
         productService.deleteProduct(productId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Product Deleted Successfully");
     }
 }
