@@ -1,0 +1,443 @@
+@startuml
+interface com.example.SpringBootTask.Sales.Services.ISaleItemService {
+~ List<SaleItem> getAllSaleItems()
+~ void createSaleItems(SaleItemRequest)
+~ void updateSaleItem(Long,SaleItemRequest)
+~ void deleteSaleItem(Long)
+}
+
+class com.example.SpringBootTask.Report.Service.DetailedService.ProductReportService {
+- ProductRepository productRepository
+- SaleRepository saleRepository
++ Map<String,Integer> calculateInventoryStatus()
++ Map<String,Object> calculateSalesPerformance()
++ Map<String,Double> calculatePricingAnalysis()
+- double calculateTotalRevenue()
+}
+
+
+class com.example.SpringBootTask.Clients.Serviecs.ClientServiceImp {
+- ClientRepository clientRepository
++ List<Client> getAllClients()
++ void createClient(ClientRequest)
++ void updateClient(Long,ClientRequest)
++ void deleteClient(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Entities.Sale {
+- Long id
+- LocalDateTime creationDate
+- Client client
+- Seller seller
+- Double total
++ Long getId()
++ void setId(Long)
++ Client getClient()
++ void setClient(Client)
++ Seller getSeller()
++ void setSeller(Seller)
++ Double getTotal()
++ void setTotal(Double)
+}
+
+
+class com.example.SpringBootTask.Configuration.RequestLoggingFilter {
+- {static} Logger LOGGER
+# void doFilterInternal(HttpServletRequest,HttpServletResponse,FilterChain)
+- String buildLogMessage(HttpServletRequest,HttpServletResponse,long)
+}
+
+
+class com.example.SpringBootTask.Sales.Controllers.SaleController {
+~ ISaleService saleService
+~ ISaleItemService saleItemService
++ ResponseEntity<SaleResponse> fetchSales()
++ ResponseEntity<String> createSale(SaleRequest)
++ ResponseEntity<String> updateSale(Long,SaleRequest)
++ ResponseEntity<String> deleteSale(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Services.SaleService {
+- SaleRepository saleRepository
+- SaleItemRepository saleItemRepository
+- SellerRepository sellerRepository
++ List<Sale> getAllSales()
++ void createSale(SaleRequest,List<SaleItem>)
++ void updateSale(SaleRequest,Long)
++ void deleteSale(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SaleItemRequest {
+- Sale sale
+- Product product
+- int quantity
+- Double price
++ Sale getSale()
++ void setSale(Sale)
++ Product getProduct()
++ void setProduct(Product)
++ int getQuantity()
++ void setQuantity(int)
++ Double getPrice()
++ void setPrice(Double)
+}
+
+
+class com.example.SpringBootTask.Report.Models.SalesReport {
+- int totalSales
+- double totalRevenue
+- List<String> topSellingProducts
+- List<Seller> topPerformingSellers
++ int getTotalSales()
++ double getTotalRevenue()
++ List<String> getTopSellingProducts()
++ List<Seller> getTopPerformingSellers()
+}
+
+
+class com.example.SpringBootTask.Products.Controllers.ProductController {
+- IProductService productService
++ ResponseEntity<ProductResponse> fetchProducts()
++ ResponseEntity<String> createProduct(ProductRequest)
++ ResponseEntity<String> updateProduct(Long,ProductRequest)
++ ResponseEntity<String> deleteProduct(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SellerRequest {
+- String name
++ String getName()
++ void setName(String)
+}
+
+
+interface com.example.SpringBootTask.Sales.Repository.SaleRepository {
+~ List<Sale> findByCreationDateBetween(LocalDateTime,LocalDateTime)
+}
+
+class com.example.SpringBootTask.Report.Service.ReportService {
+- SaleReportService saleReportService
+- ClientReportService clientReportService
+- ProductReportService productReportService
++ SalesReport generateSalesReport(LocalDateTime,LocalDateTime)
++ ClientsReport generateClientReport()
++ ProductsReport generateProductReport()
+}
+
+
+class com.example.SpringBootTask.Products.Handlers.ProductResponse {
+- List<Product> products
++ List<Product> getProducts()
++ void setProducts(List<Product>)
+}
+
+
+class com.example.SpringBootTask.Sales.Controllers.SaleItemController {
+~ ISaleItemService saleItemService
++ ResponseEntity<SaleItemResponse> fetchSaleItems()
++ ResponseEntity<String> createSaleItem(SaleItemRequest)
++ ResponseEntity<String> updateSaleItem(Long,SaleItemRequest)
++ ResponseEntity<String> deleteSaleItem(Long)
+}
+
+
+class com.example.SpringBootTask.SpringBootTaskApplication {
++ {static} void main(String[])
+}
+
+class com.example.SpringBootTask.Sales.Handlers.SaleRequest {
+- Client client
+- Seller seller
+- Double total
++ Client getClient()
++ void setClient(Client)
++ Seller getSeller()
++ void setSeller(Seller)
++ Double getTotal()
++ void setTotal(Double)
+}
+
+
+class com.example.SpringBootTask.Clients.Controllers.ClientController {
+- IClientService clientService
++ ResponseEntity<ClientResponse> fetchClients()
++ ResponseEntity<String> createClient(ClientRequest)
++ ResponseEntity<String> updateClient(Long,ClientRequest)
++ ResponseEntity<String> deleteClient(Long)
+}
+
+
+class com.example.SpringBootTask.Clients.Handlers.ClientRequest {
+- String name
+- String lastName
+- String mobile
+- String email
+- String address
++ String getName()
++ void setName(String)
++ String getLastName()
++ void setLastName(String)
++ String getMobile()
++ void setMobile(String)
++ String getEmail()
++ void setEmail(String)
++ String getAddress()
++ void setAddress(String)
+}
+
+
+class com.example.SpringBootTask.Clients.Entity.Client {
+- Long id
+- String name
+- String lastName
+- String mobile
+- String email
+- String address
++ Long getId()
++ void setId(Long)
++ String getName()
++ void setName(String)
++ String getLastName()
++ void setLastName(String)
++ String getMobile()
++ void setMobile(String)
++ String getEmail()
++ void setEmail(String)
++ String getAddress()
++ void setAddress(String)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SellerResponse {
+- List<Seller> sellers
++ List<Seller> getSellers()
++ void setSellers(List<Seller>)
+}
+
+
+class com.example.SpringBootTask.Products.Entities.Product {
+- Long id
+- String name
+- String description
+- String category
+- LocalDateTime creationDate
+- int availableQuantity
+- double price
++ Long getId()
++ void setId(Long)
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ String getCategory()
++ void setCategory(String)
++ int getAvailableQuantity()
++ void setAvailableQuantity(int)
++ double getPrice()
++ void setPrice(double)
+}
+
+
+class com.example.SpringBootTask.Report.Models.ProductsReport {
+- Map<String,Integer> inventoryStatus
+- Map<String,Object> salesPerformance
+- Map<String,Double> pricingAnalysis
++ Map<String,Integer> getInventoryStatus()
++ Map<String,Object> getSalesPerformance()
++ Map<String,Double> getPricingAnalysis()
+}
+
+
+interface com.example.SpringBootTask.Sales.Repository.SellerRepository {
+}
+class com.example.SpringBootTask.Sales.Handlers.SaleResponse {
+- List<Sale> sales
++ List<Sale> getSales()
++ void setSales(List<Sale>)
+}
+
+
+class com.example.SpringBootTask.Sales.Entities.SaleItem {
+- Long id
+- Sale sale
+- Product product
+- int quantity
+- Double price
++ Long getId()
++ void setId(Long)
++ Sale getSale()
++ void setSale(Sale)
++ Product getProduct()
++ void setProduct(Product)
++ int getQuantity()
++ void setQuantity(int)
++ Double getPrice()
++ void setPrice(Double)
+}
+
+
+class com.example.SpringBootTask.Report.Service.DetailedService.SaleReportService {
+- SaleRepository saleRepository
+- SaleItemRepository saleItemRepository
++ List<Sale> getSalesByDateRange(LocalDateTime,LocalDateTime)
++ List<Seller> getTopPerformingSellers(LocalDateTime,LocalDateTime)
++ Map<String,Long> getSalesByProductCategory(LocalDateTime,LocalDateTime)
+}
+
+
+interface com.example.SpringBootTask.Sales.Repository.SaleItemRepository {
+~ List<SaleItem> findBySaleCreationDateBetween(LocalDateTime,LocalDateTime)
+}
+
+class com.example.SpringBootTask.Report.Service.DetailedService.ClientReportService {
+- ClientRepository clientRepository
+- SaleRepository saleRepository
++ Long getTotalClients()
++ List<Client> getTopSpendingClients(int)
++ Map<String,Integer> getClientActivity()
++ Map<String,Integer> getClientLocationStatistics()
+}
+
+
+class com.example.SpringBootTask.Products.Handlers.ProductRequest {
+- String name
+- String description
+- String category
+- int quantity
+- double price
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ String getCategory()
++ void setCategory(String)
++ int getQuantity()
++ void setQuantity(int)
++ double getPrice()
++ void setPrice(double)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SaleItemResponse {
+- List<SaleItem> saleItems
++ List<SaleItem> getSaleItems()
++ void setSaleItems(List<SaleItem>)
+}
+
+
+interface com.example.SpringBootTask.Clients.Repository.ClientRepository {
+}
+class com.example.SpringBootTask.Sales.Entities.Seller {
+- Long id
+- String name
++ Long getId()
++ void setId(Long)
++ String getName()
++ void setName(String)
+}
+
+
+interface com.example.SpringBootTask.Products.Repository.ProductRepository {
+}
+class com.example.SpringBootTask.Report.Models.ClientsReport {
+- Long totalClients
+- List<Client> topSpendingClients
+- Map<String,Integer> clientActivity
+- Map<String,Integer> clientLocationStatistics
++ Long getTotalClients()
++ List<Client> getTopSpendingClients()
++ Map<String,Integer> getClientActivity()
++ Map<String,Integer> getClientLocationStatistics()
+}
+
+
+class com.example.SpringBootTask.Clients.Handlers.ClientResponse {
+- List<Client> clients
++ List<Client> getClients()
++ void setClients(List<Client>)
+}
+
+
+interface com.example.SpringBootTask.Sales.Services.ISaleService {
+~ List<Sale> getAllSales()
+~ void createSale(SaleRequest,List<SaleItem>)
+~ void updateSale(SaleRequest,Long)
+~ void deleteSale(Long)
+}
+
+class com.example.SpringBootTask.Products.Serviecs.ProductServiceImp {
+- ProductRepository productRepository
++ List<Product> getAllProducts()
++ void createProduct(ProductRequest)
++ void updateProduct(Long,ProductRequest)
++ void deleteProduct(Long)
+}
+
+
+interface com.example.SpringBootTask.Products.Serviecs.IProductService {
++ List<Product> getAllProducts()
++ void createProduct(ProductRequest)
++ void updateProduct(Long,ProductRequest)
++ void deleteProduct(Long)
+}
+
+class com.example.SpringBootTask.Report.Controller.ReportController {
+- ReportService reportService
++ SalesReport generateSalesReport(LocalDateTime,LocalDateTime)
++ ClientsReport generateClientReport()
++ ProductsReport generateProductReport()
+}
+
+
+class com.example.SpringBootTask.Sales.Services.SaleItemService {
+- SaleItemRepository saleItemRepository
++ List<SaleItem> getAllSaleItems()
++ void createSaleItems(SaleItemRequest)
++ void updateSaleItem(Long,SaleItemRequest)
++ void deleteSaleItem(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Services.SellerService {
+- SellerRepository sellerRepository
++ void createSeller(SellerRequest)
++ List<Seller> getAllSellers()
+}
+
+
+class com.example.SpringBootTask.Sales.Controllers.SellerController {
+- ISellerService sellerService
++ ResponseEntity<SellerResponse> fetchSellers()
++ ResponseEntity<String> createSeller(SellerRequest)
+}
+
+
+interface com.example.SpringBootTask.Clients.Serviecs.IClientService {
++ List<Client> getAllClients()
++ void createClient(ClientRequest)
++ void updateClient(Long,ClientRequest)
++ void deleteClient(Long)
+}
+
+interface com.example.SpringBootTask.Sales.Services.ISellerService {
+~ void createSeller(SellerRequest)
+~ List<Seller> getAllSellers()
+}
+
+
+
+com.example.SpringBootTask.Clients.Serviecs.IClientService <|.. com.example.SpringBootTask.Clients.Serviecs.ClientServiceImp
+org.springframework.web.filter.OncePerRequestFilter <|-- com.example.SpringBootTask.Configuration.RequestLoggingFilter
+com.example.SpringBootTask.Sales.Services.ISaleService <|.. com.example.SpringBootTask.Sales.Services.SaleService
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Sales.Repository.SaleRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Sales.Repository.SellerRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Sales.Repository.SaleItemRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Clients.Repository.ClientRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Products.Repository.ProductRepository
+com.example.SpringBootTask.Products.Serviecs.IProductService <|.. com.example.SpringBootTask.Products.Serviecs.ProductServiceImp
+com.example.SpringBootTask.Sales.Services.ISaleItemService <|.. com.example.SpringBootTask.Sales.Services.SaleItemService
+com.example.SpringBootTask.Sales.Services.ISellerService <|.. com.example.SpringBootTask.Sales.Services.SellerService
+@enduml

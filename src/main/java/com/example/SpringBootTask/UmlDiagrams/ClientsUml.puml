@@ -1,0 +1,81 @@
+@startuml
+class com.example.SpringBootTask.Clients.Handlers.ClientRequest {
+- String name
+- String lastName
+- String mobile
+- String email
+- String address
++ String getName()
++ void setName(String)
++ String getLastName()
++ void setLastName(String)
++ String getMobile()
++ void setMobile(String)
++ String getEmail()
++ void setEmail(String)
++ String getAddress()
++ void setAddress(String)
+}
+
+
+class com.example.SpringBootTask.Clients.Controllers.ClientController {
+- IClientService clientService
++ ResponseEntity<ClientResponse> fetchClients()
++ ResponseEntity<String> createClient(ClientRequest)
++ ResponseEntity<String> updateClient(Long,ClientRequest)
++ ResponseEntity<String> deleteClient(Long)
+}
+
+
+class com.example.SpringBootTask.Clients.Serviecs.ClientServiceImp {
+- ClientRepository clientRepository
++ List<Client> getAllClients()
++ void createClient(ClientRequest)
++ void updateClient(Long,ClientRequest)
++ void deleteClient(Long)
+}
+
+
+class com.example.SpringBootTask.Clients.Entity.Client {
+- Long id
+- String name
+- String lastName
+- String mobile
+- String email
+- String address
++ Long getId()
++ void setId(Long)
++ String getName()
++ void setName(String)
++ String getLastName()
++ void setLastName(String)
++ String getMobile()
++ void setMobile(String)
++ String getEmail()
++ void setEmail(String)
++ String getAddress()
++ void setAddress(String)
+}
+
+
+interface com.example.SpringBootTask.Clients.Repository.ClientRepository {
+}
+interface com.example.SpringBootTask.Clients.Serviecs.IClientService {
++ List<Client> getAllClients()
++ void createClient(ClientRequest)
++ void updateClient(Long,ClientRequest)
++ void deleteClient(Long)
+}
+
+class com.example.SpringBootTask.Clients.Handlers.ClientResponse {
+- List<Client> clients
++ List<Client> getClients()
++ void setClients(List<Client>)
+}
+
+
+
+
+com.example.SpringBootTask.Clients.Serviecs.IClientService <|.. com.example.SpringBootTask.Clients.Serviecs.ClientServiceImp
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Clients.Repository.ClientRepository
+@enduml

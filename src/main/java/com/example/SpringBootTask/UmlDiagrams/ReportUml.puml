@@ -1,0 +1,83 @@
+@startuml
+class com.example.SpringBootTask.Report.Service.DetailedService.ProductReportService {
+- ProductRepository productRepository
+- SaleRepository saleRepository
++ Map<String,Integer> calculateInventoryStatus()
++ Map<String,Object> calculateSalesPerformance()
++ Map<String,Double> calculatePricingAnalysis()
+- double calculateTotalRevenue()
+}
+
+
+class com.example.SpringBootTask.Report.Service.DetailedService.SaleReportService {
+- SaleRepository saleRepository
+- SaleItemRepository saleItemRepository
++ List<Sale> getSalesByDateRange(LocalDateTime,LocalDateTime)
++ List<Seller> getTopPerformingSellers(LocalDateTime,LocalDateTime)
++ Map<String,Long> getSalesByProductCategory(LocalDateTime,LocalDateTime)
+}
+
+
+class com.example.SpringBootTask.Report.Controller.ReportController {
+- ReportService reportService
++ SalesReport generateSalesReport(LocalDateTime,LocalDateTime)
++ ClientsReport generateClientReport()
++ ProductsReport generateProductReport()
+}
+
+
+class com.example.SpringBootTask.Report.Models.SalesReport {
+- int totalSales
+- double totalRevenue
+- List<String> topSellingProducts
+- List<Seller> topPerformingSellers
++ int getTotalSales()
++ double getTotalRevenue()
++ List<String> getTopSellingProducts()
++ List<Seller> getTopPerformingSellers()
+}
+
+
+class com.example.SpringBootTask.Report.Service.DetailedService.ClientReportService {
+- ClientRepository clientRepository
+- SaleRepository saleRepository
++ Long getTotalClients()
++ List<Client> getTopSpendingClients(int)
++ Map<String,Integer> getClientActivity()
++ Map<String,Integer> getClientLocationStatistics()
+}
+
+
+class com.example.SpringBootTask.Report.Models.ClientsReport {
+- Long totalClients
+- List<Client> topSpendingClients
+- Map<String,Integer> clientActivity
+- Map<String,Integer> clientLocationStatistics
++ Long getTotalClients()
++ List<Client> getTopSpendingClients()
++ Map<String,Integer> getClientActivity()
++ Map<String,Integer> getClientLocationStatistics()
+}
+
+
+class com.example.SpringBootTask.Report.Service.ReportService {
+- SaleReportService saleReportService
+- ClientReportService clientReportService
+- ProductReportService productReportService
++ SalesReport generateSalesReport(LocalDateTime,LocalDateTime)
++ ClientsReport generateClientReport()
++ ProductsReport generateProductReport()
+}
+
+
+class com.example.SpringBootTask.Report.Models.ProductsReport {
+- Map<String,Integer> inventoryStatus
+- Map<String,Object> salesPerformance
+- Map<String,Double> pricingAnalysis
++ Map<String,Integer> getInventoryStatus()
++ Map<String,Object> getSalesPerformance()
++ Map<String,Double> getPricingAnalysis()
+}
+
+
+@enduml

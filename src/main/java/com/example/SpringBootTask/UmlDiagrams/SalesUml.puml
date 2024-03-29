@@ -1,0 +1,195 @@
+@startuml
+interface com.example.SpringBootTask.Sales.Services.ISaleItemService {
+~ List<SaleItem> getAllSaleItems()
+~ void createSaleItems(SaleItemRequest)
+~ void updateSaleItem(Long,SaleItemRequest)
+~ void deleteSaleItem(Long)
+}
+
+class com.example.SpringBootTask.Sales.Entities.SaleItem {
+- Long id
+- Sale sale
+- Product product
+- int quantity
+- Double price
++ Long getId()
++ void setId(Long)
++ Sale getSale()
++ void setSale(Sale)
++ Product getProduct()
++ void setProduct(Product)
++ int getQuantity()
++ void setQuantity(int)
++ Double getPrice()
++ void setPrice(Double)
+}
+
+
+interface com.example.SpringBootTask.Sales.Repository.SaleItemRepository {
+~ List<SaleItem> findBySaleCreationDateBetween(LocalDateTime,LocalDateTime)
+}
+
+class com.example.SpringBootTask.Sales.Controllers.SaleController {
+~ ISaleService saleService
+~ ISaleItemService saleItemService
++ ResponseEntity<SaleResponse> fetchSales()
++ ResponseEntity<String> createSale(SaleRequest)
++ ResponseEntity<String> updateSale(Long,SaleRequest)
++ ResponseEntity<String> deleteSale(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Entities.Sale {
+- Long id
+- LocalDateTime creationDate
+- Client client
+- Seller seller
+- Double total
++ Long getId()
++ void setId(Long)
++ Client getClient()
++ void setClient(Client)
++ Seller getSeller()
++ void setSeller(Seller)
++ Double getTotal()
++ void setTotal(Double)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SaleItemRequest {
+- Sale sale
+- Product product
+- int quantity
+- Double price
++ Sale getSale()
++ void setSale(Sale)
++ Product getProduct()
++ void setProduct(Product)
++ int getQuantity()
++ void setQuantity(int)
++ Double getPrice()
++ void setPrice(Double)
+}
+
+
+class com.example.SpringBootTask.Sales.Services.SaleService {
+- SaleRepository saleRepository
+- SaleItemRepository saleItemRepository
+- SellerRepository sellerRepository
++ List<Sale> getAllSales()
++ void createSale(SaleRequest,List<SaleItem>)
++ void updateSale(SaleRequest,Long)
++ void deleteSale(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SaleItemResponse {
+- List<SaleItem> saleItems
++ List<SaleItem> getSaleItems()
++ void setSaleItems(List<SaleItem>)
+}
+
+
+class com.example.SpringBootTask.Sales.Entities.Seller {
+- Long id
+- String name
++ Long getId()
++ void setId(Long)
++ String getName()
++ void setName(String)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SellerRequest {
+- String name
++ String getName()
++ void setName(String)
+}
+
+
+interface com.example.SpringBootTask.Sales.Repository.SaleRepository {
+~ List<Sale> findByCreationDateBetween(LocalDateTime,LocalDateTime)
+}
+
+interface com.example.SpringBootTask.Sales.Services.ISaleService {
+~ List<Sale> getAllSales()
+~ void createSale(SaleRequest,List<SaleItem>)
+~ void updateSale(SaleRequest,Long)
+~ void deleteSale(Long)
+}
+
+class com.example.SpringBootTask.Sales.Controllers.SaleItemController {
+~ ISaleItemService saleItemService
++ ResponseEntity<SaleItemResponse> fetchSaleItems()
++ ResponseEntity<String> createSaleItem(SaleItemRequest)
++ ResponseEntity<String> updateSaleItem(Long,SaleItemRequest)
++ ResponseEntity<String> deleteSaleItem(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SaleRequest {
+- Client client
+- Seller seller
+- Double total
++ Client getClient()
++ void setClient(Client)
++ Seller getSeller()
++ void setSeller(Seller)
++ Double getTotal()
++ void setTotal(Double)
+}
+
+
+class com.example.SpringBootTask.Sales.Services.SaleItemService {
+- SaleItemRepository saleItemRepository
++ List<SaleItem> getAllSaleItems()
++ void createSaleItems(SaleItemRequest)
++ void updateSaleItem(Long,SaleItemRequest)
++ void deleteSaleItem(Long)
+}
+
+
+class com.example.SpringBootTask.Sales.Services.SellerService {
+- SellerRepository sellerRepository
++ void createSeller(SellerRequest)
++ List<Seller> getAllSellers()
+}
+
+
+class com.example.SpringBootTask.Sales.Handlers.SellerResponse {
+- List<Seller> sellers
++ List<Seller> getSellers()
++ void setSellers(List<Seller>)
+}
+
+
+class com.example.SpringBootTask.Sales.Controllers.SellerController {
+- ISellerService sellerService
++ ResponseEntity<SellerResponse> fetchSellers()
++ ResponseEntity<String> createSeller(SellerRequest)
+}
+
+
+interface com.example.SpringBootTask.Sales.Repository.SellerRepository {
+}
+interface com.example.SpringBootTask.Sales.Services.ISellerService {
+~ void createSeller(SellerRequest)
+~ List<Seller> getAllSellers()
+}
+
+class com.example.SpringBootTask.Sales.Handlers.SaleResponse {
+- List<Sale> sales
++ List<Sale> getSales()
++ void setSales(List<Sale>)
+}
+
+
+
+
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Sales.Repository.SaleItemRepository
+com.example.SpringBootTask.Sales.Services.ISaleService <|.. com.example.SpringBootTask.Sales.Services.SaleService
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Sales.Repository.SaleRepository
+com.example.SpringBootTask.Sales.Services.ISaleItemService <|.. com.example.SpringBootTask.Sales.Services.SaleItemService
+com.example.SpringBootTask.Sales.Services.ISellerService <|.. com.example.SpringBootTask.Sales.Services.SellerService
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Sales.Repository.SellerRepository
+@enduml

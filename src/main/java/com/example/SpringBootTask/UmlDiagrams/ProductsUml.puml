@@ -1,0 +1,82 @@
+@startuml
+interface com.example.SpringBootTask.Products.Serviecs.IProductService {
++ List<Product> getAllProducts()
++ void createProduct(ProductRequest)
++ void updateProduct(Long,ProductRequest)
++ void deleteProduct(Long)
+}
+
+class com.example.SpringBootTask.Products.Serviecs.ProductServiceImp {
+- ProductRepository productRepository
++ List<Product> getAllProducts()
++ void createProduct(ProductRequest)
++ void updateProduct(Long,ProductRequest)
++ void deleteProduct(Long)
+}
+
+
+class com.example.SpringBootTask.Products.Entities.Product {
+- Long id
+- String name
+- String description
+- String category
+- LocalDateTime creationDate
+- int availableQuantity
+- double price
++ Long getId()
++ void setId(Long)
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ String getCategory()
++ void setCategory(String)
++ int getAvailableQuantity()
++ void setAvailableQuantity(int)
++ double getPrice()
++ void setPrice(double)
+}
+
+
+interface com.example.SpringBootTask.Products.Repository.ProductRepository {
+}
+class com.example.SpringBootTask.Products.Controllers.ProductController {
+- IProductService productService
++ ResponseEntity<ProductResponse> fetchProducts()
++ ResponseEntity<String> createProduct(ProductRequest)
++ ResponseEntity<String> updateProduct(Long,ProductRequest)
++ ResponseEntity<String> deleteProduct(Long)
+}
+
+
+class com.example.SpringBootTask.Products.Handlers.ProductRequest {
+- String name
+- String description
+- String category
+- int quantity
+- double price
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ String getCategory()
++ void setCategory(String)
++ int getQuantity()
++ void setQuantity(int)
++ double getPrice()
++ void setPrice(double)
+}
+
+
+class com.example.SpringBootTask.Products.Handlers.ProductResponse {
+- List<Product> products
++ List<Product> getProducts()
++ void setProducts(List<Product>)
+}
+
+
+
+
+com.example.SpringBootTask.Products.Serviecs.IProductService <|.. com.example.SpringBootTask.Products.Serviecs.ProductServiceImp
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.SpringBootTask.Products.Repository.ProductRepository
+@enduml

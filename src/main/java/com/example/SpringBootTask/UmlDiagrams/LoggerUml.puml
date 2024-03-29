@@ -1,0 +1,12 @@
+@startuml
+class com.example.SpringBootTask.Configuration.RequestLoggingFilter {
+- {static} Logger LOGGER
+# void doFilterInternal(HttpServletRequest,HttpServletResponse,FilterChain)
+- String buildLogMessage(HttpServletRequest,HttpServletResponse,long)
+}
+
+
+
+
+org.springframework.web.filter.OncePerRequestFilter <|-- com.example.SpringBootTask.Configuration.RequestLoggingFilter
+@enduml
